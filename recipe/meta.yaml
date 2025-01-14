@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pavo-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pavo-{{ version }}.tar.gz
   sha256: 568aa471b90916f7db752e762344065f69aef6b445b9349aa3849dd4f5910b95
 
 build:
@@ -14,18 +14,18 @@ build:
     - pavo = pavo.__main__:cli
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - setuptools >=62.4
     - wheel
     - setuptools-scm >=6.2
     - pip
     - nodejs =16.*
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - celery
     - click
     - dynaconf
@@ -55,6 +55,7 @@ test:
     - pavo --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/bayer-group/pavo
